@@ -1,0 +1,9 @@
+.centered-table {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+body {
+  padding-top: 10px;
+}
