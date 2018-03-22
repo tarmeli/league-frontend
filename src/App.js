@@ -12,7 +12,7 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
+  fetchPlayerData() {
     const url = "http://localhost:8080/players";
 
     fetch(url, { method: "GET" })
@@ -24,16 +24,23 @@ class App extends Component {
       );
   }
 
+  componentDidMount() {
+    this.fetchPlayerData();
+  }
+
   deletePlayer(id, key) {
     const url = "http://localhost:8080/players";
 
     console.log("Key:", key + " Id", id);
-    const playerData = this.state.playerData.filter((player, i) => i !== key);
-    this.setState({
-      playerData
-    });
 
-    fetch(url + "/" + id, { method: "DELETE" }).then(result => result.json());
+    fetch(url + "/" + id, { method: "DELETE" })
+      .then(result => result.json())
+      .then(result => {
+        console.log("result at deletePlayer", result);
+        this.setState({
+          playerData: result
+        });
+      });
   }
 
   onDeletePlayer(id, key) {
@@ -69,9 +76,11 @@ class App extends Component {
   }
 
   onAddPoints(id, points, key, name) {
+    console.log("id:", id, "points", points, "key", key, "name", name);
+    console.log("this.playerData:", this.state.playerData);
     const url = "http://localhost:8080/players";
     console.log("id: " + id, "points: " + points);
-    console.log("playerData.points: ", this.state.playerData[key].points);
+
     fetch(url + "/" + id, {
       method: "PUT",
       headers: {
@@ -80,9 +89,15 @@ class App extends Component {
       },
       body: JSON.stringify({
         name: name,
-        points: this.state.playerData[key].points + Number(points)
+        points: this.state.playerData[key].points + points
       })
-    });
+    })
+      .then(result => result.json())
+      .then(result =>
+        this.setState({
+          playerData: result
+        })
+      );
   }
 
   render() {
