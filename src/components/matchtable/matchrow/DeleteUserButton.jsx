@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTrashAlt from "@fortawesome/fontawesome-free-solid/faTrashAlt";
 
-class DeletePlayerButton extends Component {
-  deletePlayerHandler(id, key) {
-    this.props.onDeletePlayer(id, key);
+class DeleteUserButton extends Component {
+  deleteUserHandler(id, key) {
+    this.props.onDeleteUser(id, key);
     console.log("index:", this.props.index, "key", key);
   }
   render() {
@@ -12,7 +12,7 @@ class DeletePlayerButton extends Component {
       <button
         className="button is-danger is-pulled-right"
         onClick={() =>
-          this.deletePlayerHandler(this.props.item._id, this.props.index)
+          this.deleteUserHandler(this.props.item._id, this.props.index)
         }
       >
         <FontAwesomeIcon icon={faTrashAlt} />
@@ -21,4 +21,4 @@ class DeletePlayerButton extends Component {
   }
 }
 
-export default DeletePlayerButton;
+export default DeleteUserButton;

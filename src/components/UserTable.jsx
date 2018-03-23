@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import PlayerRow from "./playertable/PlayerRow";
+import UserRow from "./usertable/UserRow";
 
-class PlayerTable extends Component {
-  deletePlayerHandler(id, key) {
-    this.props.onDeletePlayer(id, key);
+class UserTable extends Component {
+  deleteUserHandler(id, key) {
+    this.props.onDeleteUser(id, key);
   }
 
   addPointsHandler(id, value, key, name) {
@@ -11,12 +11,12 @@ class PlayerTable extends Component {
   }
 
   render() {
-    const Players = this.props.playerData.map((item, key) => {
-      console.log("key:", key);
+    const Users = this.props.userData.map((item, key) => {
+      console.log("userdata in table", this.props.userData);
       return (
-        <PlayerRow
+        <UserRow
           onAddPoints={this.addPointsHandler.bind(this)}
-          onDeletePlayer={this.deletePlayerHandler.bind(this)}
+          onDeleteUser={this.deleteUserHandler.bind(this)}
           item={item}
           key={key}
           index={key}
@@ -31,15 +31,19 @@ class PlayerTable extends Component {
             <tr>
               <th>Name</th>
               <th>Points</th>
-              <th />
+              <th>Matches</th>
+              <th>Wins</th>
+              <th>Ties</th>
+              <th>Losses</th>
+              <th>Win%</th>
               <th />
             </tr>
           </thead>
-          <tbody>{Players}</tbody>
+          <tbody>{Users}</tbody>
         </table>
       </div>
     );
   }
 }
 
-export default PlayerTable;
+export default UserTable;

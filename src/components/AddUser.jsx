@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class AddPlayer extends Component {
+class AddUser extends Component {
   constructor() {
     super();
     this.state = {
@@ -16,7 +16,7 @@ class AddPlayer extends Component {
   };
 
   addHandler(name) {
-    this.props.onAddPlayer(name);
+    this.props.onAddUser(name);
   }
 
   render() {
@@ -28,7 +28,7 @@ class AddPlayer extends Component {
             className="input"
             onChange={this.NameChangeHandler}
             value={this.state.playerName}
-            placeholder="Player Name"
+            placeholder="User Name"
           />
         </p>
         <p className="control">
@@ -46,4 +46,4 @@ class AddPlayer extends Component {
   }
 }
 
-export default AddPlayer;
+export default AddUser;
