@@ -30,8 +30,28 @@ class UserRow extends Component {
   }
 
   render() {
+    const pointsArray = this.props.matchData.map((item, key) => {
+      const pointsInner = item.players.map((item, key) => {
+        let counter = 0;
+        if (item.win) {
+          counter = 2;
+        } else if (item.tie) {
+          counter = 1;
+        }
+
+        return counter;
+      });
+      return pointsInner;
+    });
+
     return (
       <tr key={this.props.index}>
+        <td>{this.props.item.name}</td>
+        <td>{this.props.item.name}</td>
+        <td>{this.props.item.name}</td>
+        <td>{this.props.item.name}</td>
+        <td>{this.props.item.name}</td>
+        <td>{this.props.item.name}</td>
         <td>{this.props.item.name}</td>
       </tr>
     );

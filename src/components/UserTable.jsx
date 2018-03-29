@@ -12,9 +12,9 @@ class UserTable extends Component {
 
   render() {
     const Users = this.props.userData.map((item, key) => {
-      console.log("userdata in table", this.props.userData);
       return (
         <UserRow
+          matchData={this.props.matchData}
           onAddPoints={this.addPointsHandler.bind(this)}
           onDeleteUser={this.deleteUserHandler.bind(this)}
           item={item}

@@ -12,12 +12,12 @@ class MatchTable extends Component {
 
   render() {
     const MatchesOuter = this.props.matchData.map((item, key) => {
-      console.log("item in outer", item);
       const MatchesInner = item.players.map((item, key) => {
         return (
           <MatchRow
             onAddPoints={this.addPointsHandler.bind(this)}
             onDeleteMatch={this.deleteMatchHandler.bind(this)}
+            userData={this.props.userData}
             item={item}
             key={key}
             index={key}

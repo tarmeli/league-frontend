@@ -23,17 +23,19 @@ class MatchRow extends Component {
   }
 
   render() {
-    console.log(this.props.item);
-
     const wasTie = this.props.item.tie === true ? "x" : "";
     const wasWin = this.props.item.win === true ? "x" : "";
     const wasLoss =
       this.props.item.win === false && this.props.item.tie !== true ? "x" : "";
-
+    const playerName = this.props.userData.map((item, key) => {
+      if (this.props.item.playerId === item._id) {
+        return item.name;
+      }
+    });
     return (
       <tbody>
         <tr key={this.props.index}>
-          <td> {this.props.item.name} </td>
+          <td> {playerName} </td>
           <td>{wasWin}</td>
           <td>{wasLoss}</td>
           <td>{wasTie}</td>

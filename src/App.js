@@ -24,7 +24,6 @@ class App extends Component {
     })
       .then(result => result.json())
       .then(result => {
-        console.log("result", result);
         this.setState({
           userData: result
         });
@@ -39,7 +38,6 @@ class App extends Component {
     })
       .then(result => result.json())
       .then(result => {
-        console.log("result", result);
         this.setState({
           matchData: result
         });
@@ -59,7 +57,6 @@ class App extends Component {
     fetch(url + "/" + id, { method: "DELETE" })
       .then(result => result.json())
       .then(result => {
-        console.log("result at deleteUser", result);
         this.setState({
           userData: result
         });
@@ -72,8 +69,6 @@ class App extends Component {
 
   addUser(name) {
     const url = "http://localhost:8080/users";
-
-    console.log("Name:", name);
 
     fetch(url, {
       method: "POST",
@@ -98,10 +93,7 @@ class App extends Component {
   }
 
   onAddPoints(id, points, key, name) {
-    console.log("id:", id, "points", points, "key", key, "name", name);
-    console.log("this.userData:", this.state.userData);
     const url = "http://localhost:8080/users";
-    console.log("id: " + id, "points: " + points);
 
     fetch(url + "/" + id, {
       method: "PUT",
@@ -135,11 +127,15 @@ class App extends Component {
           <h1 className="title">Leaderboard</h1>
           <UserTable
             userData={this.state.userData}
+            matchData={this.state.matchData}
             onDeleteUser={this.onDeleteUser.bind(this)}
             onAddPoints={this.onAddPoints.bind(this)}
           />
         </div>
-        <MatchTable matchData={this.state.matchData} />
+        <MatchTable
+          matchData={this.state.matchData}
+          userData={this.state.userData}
+        />
         <div className="box has-text-centered">
           <AddMatchButton
             onClickHandler={this.openMatchPanel.bind(this)}
