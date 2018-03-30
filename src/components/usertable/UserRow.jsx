@@ -44,6 +44,8 @@ class UserRow extends Component {
       return pointsInner;
     });
 
+    console.log("pointsArray", pointsArray);
+
     return (
       <tr key={this.props.index}>
         <td>{this.props.item.name}</td>

@@ -25,22 +25,25 @@ class UserTable extends Component {
     });
 
     return (
-      <div className="centered-table">
-        <table className="table is-hoverable is-fullwidth">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Points</th>
-              <th>Matches</th>
-              <th>Wins</th>
-              <th>Ties</th>
-              <th>Losses</th>
-              <th>Win%</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>{Users}</tbody>
-        </table>
+      <div className="box has-text-centered">
+        <h1 className="title">Leaderboard</h1>
+        <div className="centered-table">
+          <table className="table is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Points</th>
+                <th>Matches</th>
+                <th>Wins</th>
+                <th>Ties</th>
+                <th>Losses</th>
+                <th>Win%</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>{Users}</tbody>
+          </table>
+        </div>
       </div>
     );
   }

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import UserTable from "./components/UserTable";
-import AddMatchButton from "./components/AddMatchButton";
 import AddMatchPanel from "./components/AddMatchPanel";
 import "bulma/css/bulma.css";
 import "./App.css";
 import MatchTable from "./components/MatchTable";
+import AddUser from "./components/AddUser";
 
 class App extends Component {
   constructor() {
@@ -123,26 +123,21 @@ class App extends Component {
   render() {
     return (
       <div className="App container is-fluid">
-        <div className="box has-text-centered">
-          <h1 className="title">Leaderboard</h1>
-          <UserTable
-            userData={this.state.userData}
-            matchData={this.state.matchData}
-            onDeleteUser={this.onDeleteUser.bind(this)}
-            onAddPoints={this.onAddPoints.bind(this)}
-          />
-        </div>
+        <AddUser onAddUser={this.onAddUser.bind(this)} />
+        <AddMatchPanel
+          userData={this.state.userData}
+          isMatchPanelOpen={this.state.isMatchPanelOpen}
+        />
+        <UserTable
+          userData={this.state.userData}
+          matchData={this.state.matchData}
+          onDeleteUser={this.onDeleteUser.bind(this)}
+          onAddPoints={this.onAddPoints.bind(this)}
+        />
         <MatchTable
           matchData={this.state.matchData}
           userData={this.state.userData}
         />
-        <div className="box has-text-centered">
-          <AddMatchButton
-            onClickHandler={this.openMatchPanel.bind(this)}
-            isMatchPanelOpen={this.state.isMatchPanelOpen}
-          />
-          <AddMatchPanel isMatchPanelOpen={this.state.isMatchPanelOpen} />
-        </div>
       </div>
     );
   }
