@@ -1,11 +1,4 @@
 import React, { Component } from "react";
-import UserPoints from "./userrow/UserPoints";
-import UserMatches from "./userrow/UserMatches";
-import UserWins from "./userrow/UserWins";
-import UserWinPercent from "./userrow/UserWinPercent";
-import UserLosses from "./userrow/UserLosses";
-import UserTies from "./userrow/UserTies";
-import DeleteUserButton from "./userrow/DeleteUserButton";
 
 class UserRow extends Component {
   constructor() {
@@ -30,22 +23,6 @@ class UserRow extends Component {
   }
 
   render() {
-    const pointsArray = this.props.matchData.map((item, key) => {
-      const pointsInner = item.players.map((item, key) => {
-        let counter = 0;
-        if (item.win) {
-          counter = 2;
-        } else if (item.tie) {
-          counter = 1;
-        }
-
-        return counter;
-      });
-      return pointsInner;
-    });
-
-    console.log("pointsArray", pointsArray);
-
     return (
       <tr key={this.props.index}>
         <td>{this.props.item.name}</td>

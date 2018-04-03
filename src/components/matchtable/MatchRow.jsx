@@ -9,6 +9,8 @@ class MatchRow extends Component {
     const playerName = this.props.userData.map((item, key) => {
       if (this.props.item.playerId === item._id) {
         return item.name;
+      } else {
+        return null;
       }
     });
     return (

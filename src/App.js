@@ -121,13 +121,11 @@ class App extends Component {
   }
 
   render() {
+    console.log("this.state.userData in app.js", this.state.userData);
     return (
       <div className="App container is-fluid">
         <AddUser onAddUser={this.onAddUser.bind(this)} />
-        <AddMatchPanel
-          userData={this.state.userData}
-          isMatchPanelOpen={this.state.isMatchPanelOpen}
-        />
+        <AddMatchPanel userData={this.state.userData} />
         <UserTable
           userData={this.state.userData}
           matchData={this.state.matchData}
