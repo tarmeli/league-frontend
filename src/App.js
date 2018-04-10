@@ -121,7 +121,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("this.state.userData in app.js", this.state.userData);
     return (
       <div className="App container is-fluid">
         <AddUser onAddUser={this.onAddUser.bind(this)} />

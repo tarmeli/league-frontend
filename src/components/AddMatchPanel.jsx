@@ -4,8 +4,7 @@ class AddMatchPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      addPlayerRow: [],
-      nextId: 0
+      addPlayerRow: []
     };
   }
 
@@ -16,97 +15,133 @@ class AddMatchPanel extends Component {
   handleRemovePlayer(e) {
     console.log("removed id:", e.target.value);
     this.setState({
-      nextId: this.state.nextId - 1,
-      addPlayerRow: this.state.addPlayerRow.filter(
-        (s, sidx) => Number(e.target.value) !== sidx
-      )
+      addPlayerRow: this.state.addPlayerRow.filter((s, sidx) => {
+        console.log("sidx", sidx);
+        return Number(e.target.value) !== sidx;
+      })
     });
   }
 
-  addPlayerButtons() {
+  addPlayerButtons(key) {
     return (
-      <p className="control">
-        <button
-          className="button is-primary"
-          value="Win"
-          onClick={this.addHandler}
-        >
-          Win
-        </button>
+      <div>
+        <div className="select">
+          <select defaultValue="Choose result">
+            <option disabled hidden>
+              Choose result
+            </option>
+            <option value="win">Win</option>
+            <option value="loss">Loss</option>
+            <option value="tie">Tie</option>
+          </select>
+        </div>
 
         <button
-          className="button is-primary"
-          value="Loss"
-          onClick={this.addHandler}
-        >
-          Loss
-        </button>
-        <button
-          className="button is-primary"
-          value="Tie"
-          onClick={this.addHandler}
-        >
-          Tie
-        </button>
-        <button
           className="button is-danger"
-          value={this.state.nextId}
+          value={this.state.addPlayerRow.length}
           onClick={e => this.handleRemovePlayer(e)}
         >
           Remove
         </button>
-      </p>
+      </div>
     );
   }
 
   playerRow() {
     return this.props.userData.map((item, key) => {
-      return <option key={key}>{item.name}</option>;
+      return (
+        <option key={key} value={item.name}>
+          {item.name}
+        </option>
+      );
     });
   }
 
   renderAddPlayerRow() {
     return (
       <div
-        key={this.state.nextId}
+        key={this.state.addPlayerRow.length}
         className="field has-addons has-addons-centered"
       >
         <div className="control">
           <div className="select">
-            <select>{this.playerRow()}</select>
+            <select defaultValue="Choose a player">
+              <option value="Choose a player" disabled hidden>
+                Choose a player
+              </option>
+              {this.playerRow()}
+            </select>
           </div>
         </div>
-        {this.addPlayerButtons()}
+        <div className="control">
+          {this.addPlayerButtons(this.state.addPlayerRow.length)}
+        </div>
       </div>
     );
   }
 
   addPlayerHandler(e) {
+    e.preventDefault();
     this.setState({
-      nextId: this.state.nextId + 1,
       addPlayerRow: this.state.addPlayerRow.concat([this.renderAddPlayerRow()])
     });
+  }
+
+  handleCancel() {
+    this.setState({
+      addPlayerRow: []
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+
+    console.log("SUBMIT!", data);
   }
 
   renderAddMatch() {
     return (
       <div className="box has-text-centered">
         <h1 className="title">Add a match</h1>
-        {this.state.addPlayerRow}
-        <button
-          className="button is-primary"
-          value="Add Player"
-          onClick={e => this.addPlayerHandler(e)}
-        >
-          Add Player
-        </button>
+        <form onSubmit={this.handleSubmit}>
+          {this.state.addPlayerRow}
+          <div className="field is-grouped is-grouped-centered">
+            <div className="control">
+              <button
+                className="button is-success"
+                value="Submit"
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
+            <div className="control">
+              <button
+                className="button is-primary"
+                value="Add Player"
+                onClick={e => this.addPlayerHandler(e)}
+              >
+                Add Player
+              </button>
+            </div>
+            <div className="control">
+              <button
+                onClick={() => this.handleCancel()}
+                className="button is-light"
+                value="Cancel"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     );
   }
 
   render() {
     if (this.props.userData.length === 0) {
-      console.log("LOADING");
       return this.renderLoading("Add Match");
     } else {
       return this.renderAddMatch();
