@@ -12,7 +12,7 @@ class App extends Component {
     this.state = {
       userData: [],
       matchData: [],
-      isMatchPanelOpen: false
+      resultArray: []
     };
   }
 
@@ -92,44 +92,62 @@ class App extends Component {
     this.addUser(name);
   }
 
-  onAddPoints(id, points, key, name) {
-    const url = "http://localhost:8080/users";
+  addMatch(matchResults) {
+    const url = "http://localhost:8080/matches";
 
-    fetch(url + "/" + id, {
-      method: "PUT",
+    console.log("dingdong", matchResults);
+
+    for (const player in matchResults) {
+      console.log("player", player, "result", matchResults[player]);
+      const actualPlayer = player;
+      const result = { [actualPlayer]: matchResults[player] };
+      console.log(result);
+      this.setState({
+        resultArray: this.state.resultArray.push(result)
+      });
+    }
+
+    console.log(this.state.resultArray);
+
+    fetch(url, {
+      method: "POST",
       headers: {
-        Accept: "application/json, text/plain, */*",
+        Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        name: name,
-        points: this.state.userData[key].points + points
+        matchName:
+          this.state.matchData.length === 0
+            ? "Game" + 1
+            : "Game" + (this.state.matchData.length + 1),
+        players: this.state.resultArray
       })
     })
       .then(result => result.json())
       .then(result =>
         this.setState({
-          userData: result
+          matchData: [...this.state.matchData, result],
+          resultArray: []
         })
       );
   }
 
-  openMatchPanel() {
-    this.setState({
-      isMatchPanelOpen: this.state.isMatchPanelOpen === false ? true : false
-    });
+  onAddMatch(matchResults) {
+    this.addMatch(matchResults);
   }
 
   render() {
     return (
       <div className="App container is-fluid">
         <AddUser onAddUser={this.onAddUser.bind(this)} />
-        <AddMatchPanel userData={this.state.userData} />
+        <AddMatchPanel
+          userData={this.state.userData}
+          onAddMatch={this.onAddMatch.bind(this)}
+        />
         <UserTable
           userData={this.state.userData}
           matchData={this.state.matchData}
           onDeleteUser={this.onDeleteUser.bind(this)}
-          onAddPoints={this.onAddPoints.bind(this)}
         />
         <MatchTable
           matchData={this.state.matchData}

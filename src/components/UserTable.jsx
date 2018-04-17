@@ -6,16 +6,11 @@ class UserTable extends Component {
     this.props.onDeleteUser(id, key);
   }
 
-  addPointsHandler(id, value, key, name) {
-    this.props.onAddPoints(id, value, key, name);
-  }
-
-  render() {
-    const Users = this.props.userData.map((item, key) => {
+  renderUsers() {
+    return this.props.userData.map((item, key) => {
       return (
         <UserRow
           matchData={this.props.matchData}
-          onAddPoints={this.addPointsHandler.bind(this)}
           onDeleteUser={this.deleteUserHandler.bind(this)}
           item={item}
           key={key}
@@ -23,7 +18,9 @@ class UserTable extends Component {
         />
       );
     });
+  }
 
+  render() {
     return (
       <div className="box has-text-centered">
         <h1 className="title">Leaderboard</h1>
@@ -41,7 +38,7 @@ class UserTable extends Component {
                 <th />
               </tr>
             </thead>
-            <tbody>{Users}</tbody>
+            <tbody>{this.renderUsers()}</tbody>
           </table>
         </div>
       </div>
