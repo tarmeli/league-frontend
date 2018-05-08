@@ -61,7 +61,9 @@ class UserRow extends Component {
   }
 
   componentWillMount() {
-    this.calculateStats();
+    setTimeout(() => {
+      this.calculateStats();
+    }, 500);
   }
 
   render() {
