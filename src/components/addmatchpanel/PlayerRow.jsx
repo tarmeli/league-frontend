@@ -47,7 +47,6 @@ class PlayerRow extends Component {
   }
 
   render() {
-    console.log("this.props in playerrow", this.props);
     return (
       <div
         key={this.props.addPlayerRow.length}

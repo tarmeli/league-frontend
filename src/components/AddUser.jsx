@@ -12,7 +12,6 @@ class AddUser extends Component {
     this.setState({
       playerName: e.target.value
     });
-    console.log("set name as:", e.target.value);
   };
 
   addHandler(name) {

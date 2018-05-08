@@ -18,18 +18,14 @@ class AddMatchPanel extends Component {
   }
 
   handleRemovePlayer(e) {
-    console.log("removed id:", e.target.value);
     this.setState({
       addPlayerRow: this.state.addPlayerRow.filter((s, sidx) => {
-        console.log("sidx", sidx);
         return Number(e.target.value) !== sidx;
       }),
       playerValue: this.state.playerValue.filter((s, sidx) => {
-        console.log("sidx", sidx);
         return Number(e.target.value) !== sidx;
       }),
       resultValue: this.state.resultValue.filter((s, sidx) => {
-        console.log("sidx", sidx);
         return Number(e.target.value) !== sidx;
       }),
       disableButton: this.state.addPlayerRow.length === 0 ? false : true
@@ -93,7 +89,6 @@ class AddMatchPanel extends Component {
     if (this.state.playerValue.length || this.state.resultValue.length === 0) {
       return true;
     } else {
-      console.log("Joo");
       return false;
     }
   }

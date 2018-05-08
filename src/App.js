@@ -17,7 +17,7 @@ class App extends Component {
   }
 
   fetchUserData() {
-    const url = "http://localhost:8080/users";
+    const url = "https://leaguebackend.herokuapp.com/users";
 
     fetch(url, {
       method: "GET"
@@ -31,7 +31,7 @@ class App extends Component {
   }
 
   fetchMatchData() {
-    const url = "http://localhost:8080/matches";
+    const url = "https://leaguebackend.herokuapp.com/matches";
 
     fetch(url, {
       method: "GET"
@@ -50,9 +50,7 @@ class App extends Component {
   }
 
   deleteUser(id, key) {
-    const url = "http://localhost:8080/users";
-
-    console.log("Key:", key + " Id", id);
+    const url = "https://leaguebackend.herokuapp.com/users";
 
     fetch(url + "/" + id, { method: "DELETE" })
       .then(result => result.json())
@@ -68,7 +66,7 @@ class App extends Component {
   }
 
   addUser(name) {
-    const url = "http://localhost:8080/users";
+    const url = "https://leaguebackend.herokuapp.com/users";
 
     fetch(url, {
       method: "POST",
@@ -93,21 +91,15 @@ class App extends Component {
   }
 
   addMatch(matchResults) {
-    const url = "http://localhost:8080/matches";
-
-    console.log("dingdong", matchResults);
+    const url = "https://leaguebackend.herokuapp.com/matches";
 
     for (const player in matchResults) {
-      console.log("player", player, "result", matchResults[player]);
       const actualPlayer = player;
       const result = { [actualPlayer]: matchResults[player] };
-      console.log(result);
       this.setState({
         resultArray: this.state.resultArray.push(result)
       });
     }
-
-    console.log(this.state.resultArray);
 
     fetch(url, {
       method: "POST",
