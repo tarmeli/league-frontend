@@ -2,16 +2,13 @@ import React, { Component } from "react";
 import UserRow from "./usertable/UserRow";
 
 class UserTable extends Component {
-  deleteUserHandler(id, key) {
-    this.props.onDeleteUser(id, key);
-  }
-
   renderUsers() {
     return this.props.userData.map((item, key) => {
       return (
         <UserRow
           matchData={this.props.matchData}
-          onDeleteUser={this.deleteUserHandler.bind(this)}
+          userData={this.props.userData}
+          onDeleteUser={this.props.onDeleteUser}
           item={item}
           key={key}
           index={key}

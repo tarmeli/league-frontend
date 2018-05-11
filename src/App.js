@@ -25,7 +25,8 @@ class App extends Component {
       .then(result => result.json())
       .then(result => {
         this.setState({
-          userData: result
+          userData: result,
+          matchData: this.state.matchData
         });
       });
   }
@@ -39,7 +40,8 @@ class App extends Component {
       .then(result => result.json())
       .then(result => {
         this.setState({
-          matchData: result
+          matchData: result,
+          userData: this.state.userData
         });
       });
   }
@@ -49,20 +51,40 @@ class App extends Component {
     this.fetchMatchData();
   }
 
-  deleteUser(id, key) {
+  deleteUser(id) {
     const url = "https://leaguebackend.herokuapp.com/users";
 
     fetch(url + "/" + id, { method: "DELETE" })
       .then(result => result.json())
       .then(result => {
         this.setState({
-          userData: result
+          userData: result,
+          matchData: this.state.matchData
         });
       });
   }
 
-  onDeleteUser(id, key) {
-    this.deleteUser(id, key);
+  onDeleteUser(id) {
+    this.deleteUser(id);
+  }
+
+  deleteMatch(id) {
+    const url = "https://leaguebackend.herokuapp.com/matches";
+    console.log(id);
+
+    fetch(url + "/" + id, { method: "DELETE" })
+      .then(result => result.json())
+      .then(result => {
+        console.log("result", result);
+        this.setState({
+          matchData: result,
+          userData: this.state.userData
+        });
+      });
+  }
+
+  onDeleteMatch(id) {
+    this.deleteMatch(id);
   }
 
   addUser(name) {
@@ -81,7 +103,8 @@ class App extends Component {
       .then(result => result.json())
       .then(result =>
         this.setState({
-          userData: [...this.state.userData, result]
+          userData: [...this.state.userData, result],
+          matchData: this.state.matchData
         })
       );
   }
@@ -119,7 +142,8 @@ class App extends Component {
       .then(result =>
         this.setState({
           matchData: [...this.state.matchData, result],
-          resultArray: []
+          resultArray: [],
+          userData: this.state.userData
         })
       );
   }
@@ -144,6 +168,7 @@ class App extends Component {
         <MatchTable
           matchData={this.state.matchData}
           userData={this.state.userData}
+          onDeleteMatch={this.onDeleteMatch.bind(this)}
         />
       </div>
     );

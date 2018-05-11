@@ -83,6 +83,12 @@ class AddMatchPanel extends Component {
     this.props.onAddMatch(
       _.zipObject(this.state.playerValue, this.state.resultValue)
     );
+    this.setState({
+      addPlayerRow: [],
+      resultValue: [],
+      playerValue: [],
+      disableButton: true
+    });
   }
 
   disableSubmitButton() {

@@ -1,20 +1,17 @@
 import React, { Component } from "react";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faTimes from "@fortawesome/fontawesome-free-solid/faTimes";
 
 class UserRow extends Component {
   constructor() {
     super();
     this.state = {
-      winPercentage: 0,
       matches: 0,
       wins: 0,
       ties: 0,
       losses: 0,
       points: 0
     };
-  }
-
-  deleteUserHandler(id, key) {
-    this.props.onDeleteUser(id, key);
   }
 
   calculateStats() {
@@ -85,6 +82,16 @@ class UserRow extends Component {
             : this.state.wins /
               (this.state.wins + this.state.losses + this.state.ties) *
               100}%
+        </td>
+        <td>
+          <button
+            className="button is-danger is-outlined"
+            onClick={() =>
+              this.props.onDeleteUser(this.props.userData[this.props.index]._id)
+            }
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
         </td>
       </tr>
     );

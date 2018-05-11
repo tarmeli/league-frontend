@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faTimes from "@fortawesome/fontawesome-free-solid/faTimes";
 
 class PlayerRow extends Component {
   constructor() {
@@ -36,11 +38,11 @@ class PlayerRow extends Component {
           </select>
         </div>
         <button
-          className="button is-danger"
+          className="button is-danger is-outlined"
           value={this.props.addPlayerRow.length}
           onClick={e => this.props.handleRemovePlayer(e)}
         >
-          Remove
+          <FontAwesomeIcon icon={faTimes} />
         </button>
       </div>
     );
