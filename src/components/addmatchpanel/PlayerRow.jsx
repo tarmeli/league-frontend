@@ -3,14 +3,6 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTimes from "@fortawesome/fontawesome-free-solid/faTimes";
 
 class PlayerRow extends Component {
-  constructor() {
-    super();
-    this.state = {
-      nameValue: "",
-      resultValue: ""
-    };
-  }
-
   playerRow() {
     return this.props.userData.map((item, key) => {
       return (
@@ -27,7 +19,7 @@ class PlayerRow extends Component {
         <div className="select">
           <select
             defaultValue="Choose result"
-            onChange={this.props.handleResultChange}
+            onChange={e => this.props.handleResultChange(e, this.props.index)}
           >
             <option disabled hidden>
               Choose result
@@ -39,8 +31,8 @@ class PlayerRow extends Component {
         </div>
         <button
           className="button is-danger is-outlined"
-          value={this.props.addPlayerRow.length}
-          onClick={e => this.props.handleRemovePlayer(e)}
+          value={this.props.index}
+          onClick={e => this.props.handleRemovePlayer(e, this.props.index)}
         >
           <FontAwesomeIcon icon={faTimes} />
         </button>
@@ -58,7 +50,7 @@ class PlayerRow extends Component {
           <div className="select">
             <select
               defaultValue="Choose a player"
-              onChange={this.props.handlePlayerChange}
+              onChange={e => this.props.handlePlayerChange(e, this.props.index)}
             >
               <option value="Choose a player" disabled hidden>
                 Choose a player
@@ -67,9 +59,7 @@ class PlayerRow extends Component {
             </select>
           </div>
         </div>
-        <div className="control">
-          {this.addPlayerButtons(this.props.addPlayerRow.length)}
-        </div>
+        <div className="control">{this.addPlayerButtons()}</div>
       </div>
     );
   }

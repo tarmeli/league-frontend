@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTimes from "@fortawesome/fontawesome-free-solid/faTimes";
 
-class UserRow extends Component {
+export default class UserRow extends Component {
   constructor() {
     super();
     this.state = {
@@ -57,7 +57,7 @@ class UserRow extends Component {
     });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     setTimeout(() => {
       this.calculateStats();
     }, 500);
@@ -97,5 +97,3 @@ class UserRow extends Component {
     );
   }
 }
-
-export default UserRow;

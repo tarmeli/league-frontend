@@ -9,26 +9,26 @@ class AddMatchPanel extends Component {
       addPlayerRow: [],
       playerValue: [],
       resultValue: [],
-      disableButton: true
+      disableSubmitButton: true
     };
   }
 
-  renderLoading(string) {
-    return <div>Loading {string}</div>;
-  }
-
-  handleRemovePlayer(e) {
+  handleRemovePlayer(e, index) {
+    console.log(e.target.value);
     this.setState({
-      addPlayerRow: this.state.addPlayerRow.filter((s, sidx) => {
-        return Number(e.target.value) !== sidx;
+      addPlayerRow: this.state.addPlayerRow.filter((item, key) => {
+        console.log("addplayerrow", item, "key", key, "index", index);
+        return key !== index;
       }),
-      playerValue: this.state.playerValue.filter((s, sidx) => {
-        return Number(e.target.value) !== sidx;
+      playerValue: this.state.playerValue.filter((item, key) => {
+        console.log("playervalue", item, "key", key, "index", index);
+        return key !== index;
       }),
-      resultValue: this.state.resultValue.filter((s, sidx) => {
-        return Number(e.target.value) !== sidx;
+      resultValue: this.state.resultValue.filter((item, key) => {
+        console.log("resultvalue", item, "key", key, "index", index);
+        return key !== index;
       }),
-      disableButton: this.state.addPlayerRow.length === 0 ? false : true
+      disableSubmitButton: this.state.addPlayerRow.length === 0 ? false : true
     });
   }
 
@@ -41,6 +41,7 @@ class AddMatchPanel extends Component {
         handleRemovePlayer={this.handleRemovePlayer.bind(this)}
         handleResultChange={this.handleResultChange.bind(this)}
         handlePlayerChange={this.handlePlayerChange.bind(this)}
+        index={this.state.addPlayerRow.length}
       />
     );
   }
@@ -48,22 +49,55 @@ class AddMatchPanel extends Component {
   addPlayerHandler(e) {
     e.preventDefault();
     this.setState({
-      addPlayerRow: this.state.addPlayerRow.concat([this.renderAddPlayerRow()])
+      addPlayerRow: this.state.addPlayerRow.concat([this.renderAddPlayerRow()]),
+      disableSubmitButton: true
     });
   }
 
-  handlePlayerChange = e => {
-    this.setState({
-      playerValue: this.state.playerValue.concat(e.target.value),
-      disableButton: this.state.resultValue.length === 0 ? true : false
-    });
+  handlePlayerChange = (e, key) => {
+    const tempPlayerValue = this.state.playerValue;
+    tempPlayerValue[key] = e.target.value;
+    const playerValueNullCheck = [];
+    this.setState(
+      {
+        playerValue: tempPlayerValue
+      },
+      () => {
+        this.state.playerValue.map(item => {
+          playerValueNullCheck.push(item);
+          return null;
+        });
+        this.setState({
+          disableSubmitButton:
+            playerValueNullCheck.length === this.state.resultValue.length
+              ? false
+              : true
+        });
+      }
+    );
   };
 
-  handleResultChange = e => {
-    this.setState({
-      resultValue: this.state.resultValue.concat(e.target.value),
-      disableButton: this.state.playerValue.length === 0 ? true : false
-    });
+  handleResultChange = (e, key) => {
+    let tempResultValue = this.state.resultValue;
+    tempResultValue[key] = e.target.value;
+    const resultValueNullCheck = [];
+    this.setState(
+      {
+        resultValue: tempResultValue
+      },
+      () => {
+        this.state.resultValue.map(item => {
+          resultValueNullCheck.push(item);
+          return null;
+        });
+        this.setState({
+          disableSubmitButton:
+            resultValueNullCheck.length === this.state.playerValue.length
+              ? false
+              : true
+        });
+      }
+    );
   };
 
   handleReset() {
@@ -71,7 +105,7 @@ class AddMatchPanel extends Component {
       addPlayerRow: [],
       resultValue: [],
       playerValue: [],
-      disableButton: true
+      disableSubmitButton: true
     });
   }
 
@@ -87,28 +121,20 @@ class AddMatchPanel extends Component {
       addPlayerRow: [],
       resultValue: [],
       playerValue: [],
-      disableButton: true
+      disableSubmitButton: true
     });
-  }
-
-  disableSubmitButton() {
-    if (this.state.playerValue.length || this.state.resultValue.length === 0) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   renderAddMatch() {
     return (
-      <div className="box has-text-centered">
+      <div>
         <h1 className="title">Add a match</h1>
         {this.state.addPlayerRow}
         <div className="field is-grouped is-grouped-centered">
           <div className="control">
             <button
               type="button"
-              disabled={this.state.disableButton}
+              disabled={this.state.disableSubmitButton}
               className="button is-success"
               onClick={() => this.handleSubmit()}
             >
@@ -139,11 +165,13 @@ class AddMatchPanel extends Component {
   }
 
   render() {
-    if (this.props.userData.length === 0) {
-      return this.renderLoading("Add Match");
-    } else {
-      return this.renderAddMatch();
-    }
+    const display =
+      this.props.userData.length === 0 ? { display: "none" } : { display: "" };
+    return (
+      <div className="box has-text-centered" style={display}>
+         {this.renderAddMatch()}
+      </div>
+    );
   }
 }
 

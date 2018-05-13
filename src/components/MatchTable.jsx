@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import MatchRow from "./matchtable/MatchRow";
 
-class MatchTable extends Component {
+export default class MatchTable extends Component {
   renderMatchRow() {
     return this.props.matchData.map((item, key) => {
-      console.log("item", item._id);
       return (
         <MatchRow
           key={key}
           players={item.players}
           userData={this.props.userData}
+          matchData={item}
           matchName={item.matchName}
           onDeleteMatch={this.props.onDeleteMatch}
+          onUpdateMatch={this.props.onUpdateMatch}
           gameId={item._id}
         />
       );
@@ -19,8 +20,12 @@ class MatchTable extends Component {
   }
 
   render() {
-    return <div className="box has-text-centered">{this.renderMatchRow()}</div>;
+    const display =
+      this.props.matchData.length === 0 ? { display: "none" } : { display: "" };
+    return (
+      <div className="box has-text-centered" style={display}>
+        {this.renderMatchRow()}
+      </div>
+    );
   }
 }
-
-export default MatchTable;

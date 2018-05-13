@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import UserRow from "./usertable/UserRow";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faSync from "@fortawesome/fontawesome-free-solid/faSync";
 
 class UserTable extends Component {
   renderUsers() {
@@ -17,9 +19,16 @@ class UserTable extends Component {
     });
   }
 
-  render() {
+  renderUserTable() {
     return (
-      <div className="box has-text-centered">
+      <div>
+        <div className="is-pulled-right">
+          <button className="button" onClick={() => this.forceUpdate()}>
+            <span>
+              <FontAwesomeIcon icon={faSync} />
+            </span>
+          </button>
+        </div>
         <h1 className="title">Leaderboard</h1>
         <div className="centered-table">
           <table className="table is-hoverable is-fullwidth">
@@ -38,6 +47,20 @@ class UserTable extends Component {
             <tbody>{this.renderUsers()}</tbody>
           </table>
         </div>
+      </div>
+    );
+  }
+
+  renderLoading() {
+    return <span>Loading</span>;
+  }
+
+  render() {
+    const display =
+      this.props.userData.length === 0 ? { display: "none" } : { display: "" };
+    return (
+      <div className="box has-text-centered" style={display}>
+        {this.renderUserTable()}
       </div>
     );
   }

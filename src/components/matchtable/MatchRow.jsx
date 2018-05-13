@@ -61,7 +61,6 @@ class MatchRow extends Component {
       this.state.editPanelOpen === true ? ["modal", "is-active"] : ["modal"];
     const deleteWarningClasses =
       this.state.deleteWarning === true ? ["modal", "is-active"] : ["modal"];
-    console.log("gameId in matchrow", this.props.gameId);
 
     return (
       <div>
@@ -69,6 +68,9 @@ class MatchRow extends Component {
           classes={editModalClasses}
           matchName={this.props.matchName}
           toggleEditPanel={this.toggleEditPanel.bind(this)}
+          matchData={this.props.matchData}
+          userData={this.props.userData}
+          onUpdateMatch={this.props.onUpdateMatch}
         />
         <DeleteWarning
           classes={deleteWarningClasses}
@@ -96,7 +98,7 @@ class MatchRow extends Component {
                   onClick={() => this.toggleDeleteWarning()}
                 >
                   <span>
-                    <FontAwesomeIcon icon={faTimes} />
+                    <FontAwesomeIcon icon={faTimes} alt="Delete" />
                   </span>
                 </button>
               </p>

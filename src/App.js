@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import UserTable from "./components/UserTable";
 import AddMatchPanel from "./components/AddMatchPanel";
-import "bulma/css/bulma.css";
-import "./App.css";
 import MatchTable from "./components/MatchTable";
 import AddUser from "./components/AddUser";
+import "bulma/css/bulma.css";
+import "./App.css";
 
 class App extends Component {
   constructor() {
@@ -115,14 +115,18 @@ class App extends Component {
 
   addMatch(matchResults) {
     const url = "https://leaguebackend.herokuapp.com/matches";
+    console.log("matchResults", matchResults);
 
     for (const player in matchResults) {
       const actualPlayer = player;
       const result = { [actualPlayer]: matchResults[player] };
+      console.log("result", result);
       this.setState({
         resultArray: this.state.resultArray.push(result)
       });
     }
+
+    console.log("resultarray", this.state.resultArray);
 
     fetch(url, {
       method: "POST",
@@ -133,8 +137,8 @@ class App extends Component {
       body: JSON.stringify({
         matchName:
           this.state.matchData.length === 0
-            ? "Game" + 1
-            : "Game" + (this.state.matchData.length + 1),
+            ? "Match " + 1
+            : "Match " + (this.state.matchData.length + 1),
         players: this.state.resultArray
       })
     })
@@ -150,6 +154,47 @@ class App extends Component {
 
   onAddMatch(matchResults) {
     this.addMatch(matchResults);
+  }
+
+  updateMatch(updatedResults, matchId, matchName) {
+    const url = "https://leaguebackend.herokuapp.com/matches";
+    console.log("matchid", matchId);
+    console.log("updatedresults", updatedResults);
+
+    for (const player in updatedResults) {
+      const actualPlayer = player;
+      const result = { [actualPlayer]: updatedResults[player] };
+      console.log("result", result);
+      console.log("this.state.resultArray", this.state.resultArray);
+      this.setState({
+        resultArray: this.state.resultArray.push(result)
+      });
+      console.log(this.state.resultArray);
+    }
+
+    fetch(url + "/" + matchId, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        matchName: matchName,
+        players: this.state.resultArray
+      })
+    })
+      .then(result => result.json())
+      .then(result => {
+        this.setState({
+          resultArray: [],
+          matchData: result,
+          userData: this.state.userData
+        });
+      });
+  }
+
+  onUpdateMatch(updatedResults, matchId, matchName) {
+    this.updateMatch(updatedResults, matchId, matchName);
   }
 
   render() {
@@ -169,6 +214,7 @@ class App extends Component {
           matchData={this.state.matchData}
           userData={this.state.userData}
           onDeleteMatch={this.onDeleteMatch.bind(this)}
+          onUpdateMatch={this.onUpdateMatch.bind(this)}
         />
       </div>
     );
