@@ -14,16 +14,19 @@ class AddUser extends Component {
     });
   };
 
-  addHandler(e, name) {
-    this.props.onAddUser(name);
+  addHandler(e) {
+    this.props.onAddUser(this.state.playerName);
     e.preventDefault();
+    this.setState({
+      playerName: ""
+    });
   }
 
   render() {
     return (
       <div className="box has-text-centered">
         <h1 className="title">Add a player to the league</h1>
-        <form onSubmit={e => this.addHandler(e, this.state.playerName)}>
+        <form onSubmit={e => this.addHandler(e)}>
           <div className="field has-addons has-addons-centered">
             <p className="control">
               <input
